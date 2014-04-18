@@ -16,13 +16,17 @@
 
 #ifdef __cplusplus
 extern "C"
-#endif
 DNSError decodeDNSMessage(DNSMessage *message, DNSbyte *rowdata, DNSint length);
 DNSError freeDNSMessage(DNSMessage *message);
+#endif
+
+
 DNSint extractNameLabels(DNSbyte *data, DNSint startPos, DNSint *nameCount, DNSchar ***names);
 DNSError extractNames(DNSbyte *data, DNSint *nameCount, DNSchar **names, DNSint *tagPos);
 DNSint decodeRR(DNSRR **rrData,DNSbyte *rowdata, DNSint tagPos);
 DNSError decodeRDATA(DNSbyte *rdata, DNSushort type);
+DNSError freeDNSQuestion(DNSQuestion *);
+DNSError freeDNSRR(DNSRR *);
 
 
 #endif // MBDNS_H
