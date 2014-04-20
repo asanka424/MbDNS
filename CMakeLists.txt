@@ -27,7 +27,8 @@ set( MbDNS_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}" CACHE PATH "Path to MbDNS heade
 set (CMAKE_C_FLAGS "--std=c99")
 include_directories("${MbDNS_HEADERS}")
 
-file( GLOB MbDNS_SRC "*.c" )
+#src files
+file( GLOB MbDNS_SRC "*.c" "*.h" )
 
 add_library(MbDNS SHARED ${MbDNS_SRC} )
 

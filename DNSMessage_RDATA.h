@@ -2,6 +2,7 @@
 #define DNSMESSAGE_RDATA_H
 
 #include "types.h"
+
 typedef struct{
     DNSint cname_count;
     DNSchar **CNAME;
@@ -62,6 +63,7 @@ typedef struct{
     DNSuint REFRESH;
     DNSuint RETRY;
     DNSuint EXPIRE;
+    DNSuint MINIMUM;
 }RDATA_SOA;
 typedef struct{
     DNSchar *TXT_DATA;
@@ -69,6 +71,9 @@ typedef struct{
 typedef struct{
     DNSbyte ADDRESS[4];
 }RDATA_A;
+typedef struct{
+    DNSbyte ADDRESS[16];
+}RDATA_AAAA;
 typedef struct{
     DNSbyte ADDRESS[4];
     DNSbyte PROTOCOL;

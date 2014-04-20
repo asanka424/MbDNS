@@ -49,7 +49,7 @@ DNSError decodeDNSMessage(DNSMessage *message, DNSbyte *rowdata, DNSint msgLengt
     for (int i=0; i<anCount; i++)
     {
         message->Answer = (DNSRR **)realloc(message->Answer,(i+1) * sizeof(DNSRR *));
-        tagPos = decodeRR(&(message->Answer[i]),rowdata,tagPos);
+        tagPos = decodeRR(rowdata,tagPos,&(message->Answer[i]));
     }
     //check end of message;
     if (tagPos > msgLength)
@@ -60,7 +60,7 @@ DNSError decodeDNSMessage(DNSMessage *message, DNSbyte *rowdata, DNSint msgLengt
     for (int i=0; i<auCount; i++)
     {
         message->Authority = (DNSRR **)realloc(message->Authority,(i+1) * sizeof(DNSRR *));
-        tagPos = decodeRR(&(message->Authority[i]),rowdata,tagPos);
+        tagPos = decodeRR(rowdata,tagPos,&(message->Authority[i]));
     }
     //check end of message;
     if (tagPos > msgLength)
@@ -71,13 +71,13 @@ DNSError decodeDNSMessage(DNSMessage *message, DNSbyte *rowdata, DNSint msgLengt
     for (int i=0; i<arCount; i++)
     {
         message->Additional = (DNSRR **)realloc(message->Additional,(i+1) * sizeof(DNSRR *));
-        tagPos = decodeRR(&(message->Additional[i]),rowdata,tagPos);
+        tagPos = decodeRR(rowdata,tagPos,&(message->Additional[i]));
     }
 
     return DNS_NONE;
 
 }
-DNSint decodeRR(DNSRR **rrData, DNSbyte *rowdata, DNSint tagPos)
+DNSint decodeRR(DNSbyte *rowdata, DNSint tagPos, DNSRR **rrData)
 {
     *rrData = (DNSRR *)calloc(1,sizeof(DNSRR));
     (*rrData)->NAMES = NULL;
@@ -92,11 +92,8 @@ DNSint decodeRR(DNSRR **rrData, DNSbyte *rowdata, DNSint tagPos)
 
     tagPos += 10;
     DNSint rdLen = (*rrData)->RDLENGTH;
-    (*rrData)->RDATA = (DNSbyte *)malloc(rdLen * sizeof(DNSchar));
-    for (int j=0; j<rdLen; j++)
-    {
-        (*rrData)->RDATA[j] = rowdata[tagPos++];
-    }
+    decodeRDATA(rowdata,rdLen,tagPos,(*rrData)->TYPE,&(*rrData)->RDATA);
+    tagPos += rdLen;
     return tagPos;
 }
 

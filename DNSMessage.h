@@ -2,7 +2,7 @@
 #define MBDNSMESSAGE_H
 
 #include "types.h"
-#include "DNSMessage_RDATA.h"
+
 
 
 typedef struct{
@@ -34,7 +34,7 @@ typedef struct{
     DNSushort CLASS;
     DNSuint TTL;
     DNSint RDLENGTH;
-    DNSbyte *RDATA;
+    void *RDATA;
 }DNSRR;
 
 typedef struct{

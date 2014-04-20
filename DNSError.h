@@ -9,4 +9,10 @@ typedef enum {
     DNS_ENCODE_ERROR = 2
 }DNSError ;
 
+typedef struct{
+    DNSint ErrorNumber;
+    DNSint ErrorFunction;
+    DNSchar *ErrorString;
+}DNSError_t;
+
 #endif // DNSERROR_H
