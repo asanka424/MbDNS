@@ -50,13 +50,13 @@ typedef struct{
 }DNSRowMessage;
 typedef struct{
     DNSint id;
-    DNSint qr;
-    DNSint opcode;
-    DNSbyte aa;
-    DNSbyte tc;
-    DNSbyte rd;
-    DNSbyte ra;
-    DNSint rcode;
+    DNSushort qr;
+    DNSushort opcode;
+    DNSushort aa;
+    DNSushort tc;
+    DNSushort rd;
+    DNSushort ra;
+    DNSushort rcode;
     DNSint qdcount;
     DNSint ancount;
     DNSint nscount;
@@ -66,6 +66,18 @@ typedef struct{
     DNSRR **Authority;
     DNSRR **Additional;
 }DNSMessage;
+typedef struct{
+    DNSbyte data[512]; //maximum size
+    DNSint length;
+}DNSEncodedMessage;
+typedef struct{
+    DNSchar *label;
+    DNSshort pos;
+}EncodedLabel;
+typedef struct{
+    EncodedLabel *labels;
+    DNSint count;
+}EncodedLabelsArray;
 
 
 #endif //MBDNSMESSAGE_H

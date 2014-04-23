@@ -9,6 +9,10 @@ DNSError decodeDNSMessage(DNSMessage *message, DNSbyte *rowdata, DNSint msgLengt
     message->id = ntohs((DNSint)header->ID);
     message->qr = (header->FLAGS & QR) >> QR_SHIFT;
     message->opcode = (header->FLAGS & OPCODE )>> OPCODE_SHIFT;
+    message->aa = (header->FLAGS & AA) >> AA_SHIFT;
+    message->tc = (header->FLAGS & TC) >> TC_SHIFT;
+    message->rd = (header->FLAGS & RD) >> RD_SHIFT;
+    message->ra = (header->FLAGS & RA) >> RA_SHIFT;
     message->rcode = (header->FLAGS & RCODE);
     message->qdcount = ntohs(header->QDCOUNT);
     message->ancount = ntohs(header->ANCOUNT);
@@ -87,7 +91,7 @@ DNSint decodeRR(DNSbyte *rowdata, DNSint tagPos, DNSRR **rrData)
     DNSRR_Values *vals = (DNSRR_Values *)&rowdata[tagPos];
     (*rrData)->TYPE = ntohs(vals->TYPE);
     (*rrData)->CLASS = ntohs(vals->CLASS);
-    (*rrData)->TTL = ntohs(vals->TTL);
+    (*rrData)->TTL = ntohl(vals->TTL);
     (*rrData)->RDLENGTH = ntohs(vals->RDLENGTH);
 
     tagPos += 10;

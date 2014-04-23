@@ -66,6 +66,13 @@ typedef struct{
     DNSuint MINIMUM;
 }RDATA_SOA;
 typedef struct{
+    DNSuint SERIAL;
+    DNSuint REFRESH;
+    DNSuint RETRY;
+    DNSuint EXPIRE;
+    DNSuint MINIMUM;
+}RDATA_SOA_Values;
+typedef struct{
     DNSchar *TXT_DATA;
 }RDATA_TXT;
 typedef struct{

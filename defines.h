@@ -46,7 +46,7 @@
 #define TYPE_MINFO           14 //mailbox or mail list information
 #define TYPE_MX              15 //mail exchange
 #define TYPE_TXT             16 //text strings
-#define TYPE_AAAA            26 //ipv6
+#define TYPE_AAAA            28 //ipv6
 
 #define QTYPE_AXFR           252 //A request for a transfer of an entire zone
 #define QTYPE_MAILB          253 //A request for mailbox-related records (MB, MG or MR)

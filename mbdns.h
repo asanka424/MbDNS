@@ -18,6 +18,11 @@
 #ifdef __cplusplus
 extern "C" DNSError decodeDNSMessage(DNSMessage *message, DNSbyte *rowdata, DNSint length);
 extern "C" DNSError freeDNSMessage(DNSMessage *message);
+extern "C" DNSError encodeDNSMessage(DNSMessage message,DNSEncodedMessage *encoded);
+#else
+DNSError decodeDNSMessage(DNSMessage *message, DNSbyte *rowdata, DNSint length);
+DNSError freeDNSMessage(DNSMessage *message);
+DNSError encodeDNSMessage(DNSMessage message,DNSEncodedMessage *encoded);
 #endif
 
 
@@ -29,6 +34,9 @@ DNSError  decodeRDATA(DNSbyte *rowdata, DNSint len, DNSint startPos, DNSushort t
 DNSError freeDNSQuestion(DNSQuestion *);
 DNSError freeDNSRR(DNSRR *);
 DNSError freeRRData(void *, DNSushort type);
-
+DNSError encodeNames(DNSchar **names, DNSint count, DNSEncodedMessage *encoded, EncodedLabelsArray *labelDB);
+DNSshort queryNamePointer(EncodedLabelsArray *labelDB,DNSchar *label,DNSshort pos);
+DNSError encodeRR(DNSRR *rr, DNSEncodedMessage *encoded, EncodedLabelsArray *labelDB);
+DNSError encodeRData(void *rdata, DNSint type, DNSEncodedMessage *encoded, EncodedLabelsArray *labelDB);
 
 #endif // MBDNS_H

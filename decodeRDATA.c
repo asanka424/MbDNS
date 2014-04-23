@@ -68,15 +68,16 @@ DNSError  decodeRDATA(DNSbyte *rawdata,DNSint len,DNSint startPos, DNSushort typ
             soa->rname_count = 0;
             soa->RNAME = NULL;
             tagPos = extractNameLabels(rawdata,tagPos,&(soa->rname_count),&(soa->RNAME));
-            soa->SERIAL = *(DNSuint *)&rawdata[tagPos];
+            soa->SERIAL = ntohl(*(DNSuint *)&rawdata[tagPos]);
             tagPos += 4;
-            soa->REFRESH = *(DNSuint *)&rawdata[tagPos];
+            soa->REFRESH = ntohl(*(DNSuint *)&rawdata[tagPos]);
             tagPos += 4;
-            soa->RETRY = *(DNSuint *)&rawdata[tagPos];
+            soa->RETRY = ntohl(*(DNSuint *)&rawdata[tagPos]);
             tagPos += 4;
-            soa->EXPIRE = *(DNSuint *)&rawdata[tagPos];
+            soa->EXPIRE = ntohl(*(DNSuint *)&rawdata[tagPos]);
             tagPos += 4;
-            soa->MINIMUM = *(DNSuint *)&rawdata[tagPos];
+            soa->MINIMUM = ntohl(*(DNSuint *)&rawdata[tagPos]);
+            tagPos += 4;
             *decoded = (void *)soa;
             break;
         }
@@ -165,7 +166,7 @@ DNSError  decodeRDATA(DNSbyte *rawdata,DNSint len,DNSint startPos, DNSushort typ
         {
             RDATA_MX *mx;
             mx = (RDATA_MX *)malloc(sizeof(RDATA_MX));
-            mx->PREFERENCE = *(DNSshort *)rawdata;
+            mx->PREFERENCE = ntohs(*(DNSshort *)rawdata);
             mx->exchange_count = 0;
             mx->EXCHANGE = NULL;
             extractNameLabels(rawdata,startPos+1,&(mx->exchange_count),&(mx->EXCHANGE));
