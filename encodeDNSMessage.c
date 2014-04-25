@@ -59,6 +59,7 @@ DNSError encodeDNSMessage(DNSMessage message,DNSEncodedMessage *encoded)
         free(enLabel.label);
     }
     free(labelDB.labels);
+    return DNS_NONE;
 }
 DNSError encodeRR(DNSRR *rr, DNSEncodedMessage *encoded, EncodedLabelsArray *labelDB)
 {
@@ -70,6 +71,7 @@ DNSError encodeRR(DNSRR *rr, DNSEncodedMessage *encoded, EncodedLabelsArray *lab
     rrVals->RDLENGTH = htons(rr->RDLENGTH);
     encoded->length += 10;
     encodeRData(rr->RDATA,rr->TYPE,encoded,labelDB);
+    return DNS_NONE;
 }
 
 DNSError encodeNames(DNSchar **names, DNSint count, DNSEncodedMessage *encoded, EncodedLabelsArray *labelDB)
@@ -110,7 +112,8 @@ DNSError encodeNames(DNSchar **names, DNSint count, DNSEncodedMessage *encoded, 
         else
         {
             ptr = (0xC000 | ptr);
-            *(DNSushort *)&encoded->data[encoded->length] = htons(ptr);
+            DNSushort *p_msgPtr = (DNSushort *)&encoded->data[encoded->length];
+            *p_msgPtr = htons(ptr);
             encoded->length += 2;
             pointerFound = 1;
             break;

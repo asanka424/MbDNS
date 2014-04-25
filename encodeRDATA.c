@@ -124,7 +124,8 @@ DNSError encodeRData(void *rdata, DNSint type, DNSEncodedMessage *encoded, Encod
         case TYPE_MX:
         {
             RDATA_MX *mx = (RDATA_MX *)rdata;
-            *(DNSshort *)&encoded->data[encoded->length] = htons(mx->PREFERENCE);
+            DNSshort *p_mxptr = (DNSshort *)&encoded->data[encoded->length];
+            *p_mxptr = htons(mx->PREFERENCE);
             encoded->length += 2;
             encodeNames(mx->EXCHANGE,mx->exchange_count,encoded,labelDB);
             return DNS_NONE;
@@ -150,4 +151,5 @@ DNSError encodeRData(void *rdata, DNSint type, DNSEncodedMessage *encoded, Encod
         }
 
     }
+    return DNS_NONE;
 }

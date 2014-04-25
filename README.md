@@ -6,7 +6,8 @@ The purpose of this project is to provide a lightweight library to encode and de
 Only decoding part is coded. These is a list of thins to do.
 
 Apply error checking mechanism
-Code encoder part
+Code encoder part - Done
 Code other RR data types
+Build a test suit
 
 Coding contributions are wellcom!!
